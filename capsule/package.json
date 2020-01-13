@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@bit/tallyb.test2.hello-world2": "file:./components/hello-world2"
+  }
+}

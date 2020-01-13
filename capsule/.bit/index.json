@@ -1,0 +1,10 @@
+[
+  {
+    "id": {
+      "scope": "tallyb.test2",
+      "name": "hello-world2"
+    },
+    "isSymlink": false,
+    "hash": "f89129be227f6d9184fcd58e2233bf5ab7554f1f"
+  }
+]
