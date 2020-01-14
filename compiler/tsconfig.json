@@ -43,8 +43,7 @@
       "tests/**/*.tsx"
     ],
     "exclude": [
-      "node_modules",
-      "components"
+      "node_modules"
     ]
   }
   
