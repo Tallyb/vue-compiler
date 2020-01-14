@@ -33,6 +33,6 @@ export async function isolate(cc: CompilerContext, isolateOptions?: GenericObjec
     const res = await api.isolate(actualOpts);
   
     return { res, directory: targetDir };
-  }
+}
 
   

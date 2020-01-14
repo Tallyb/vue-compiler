@@ -30,11 +30,6 @@
         "scripthost"
       ]
     },
-    "include": [
-      "hello-world2/**/*.ts",
-      "hello-world2/**/*.tsx",
-      "hello-world2/**/*.vue"
-    ],
     "exclude": [
       "node_modules"
     ]

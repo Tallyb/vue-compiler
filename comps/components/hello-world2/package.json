@@ -9,7 +9,13 @@
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {
-      "compiler": "bit.envs/bundlers/vue@2.6.18"
+      "compiler": {
+        "bit.envs/compilers/test@0.0.1": {
+          "options": {
+            "file": "../compiler/dist/index.js"
+          }
+        }
+      }
     }
   }
 }
