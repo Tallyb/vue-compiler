@@ -1,6 +1,6 @@
+
 const vueCli = require('@vue/cli-service');
 const path = require('path');
-import * as fs from 'fs-extra';
 import debug from 'debug';
 import {getCapsuleName} from './capsule.utils';
 import {TSConfig} from './tsconfig';
@@ -37,7 +37,9 @@ export async function run (actionParams: any, _:any, context: any) : Promise<voi
     const isolateOptions = {};
     const actualOpts = { ...{ targetDir, shouldBuildDependencies: true }, ...isolateOptions };
     let res = await isolate(actualOpts);
-    
+    console.dir(res, {depth: 10, colors: true})
+    const fs = res.fs;
+
     // Get compilation Files
     const capsulePath = res.capsule.container.path;
     let sources : Array<any> = res.componentWithDependencies.component.toObject().files;
@@ -45,17 +47,17 @@ export async function run (actionParams: any, _:any, context: any) : Promise<voi
     let nonCompiledSources = sources.filter(s => !COMPILED_EXTS.includes(s.extname));
     compiledSources = sources.map(s => path.join(componentDir, s.path));
     console.log(capsulePath);
-
+    
     // write TS config into capsule
     let TS = Object.assign(TSConfig, {
         include: compiledSources,
     });
     console.log(capsulePath);
     console.log(path.join(capsulePath, 'vue.config.js'));
-    await fs.writeFile(path.join(capsulePath, 'tsconfig.json'), JSON.stringify(TS, null, 4));
+    await fs.writeFile('tsconfig.json', JSON.stringify(TS, null, 4));
 
     //write Vue config into capsule
-    await fs.writeFile(path.join(capsulePath, 'vue.config.js'), vueConfig.toString());
+    await fs.writeFile('vue.config.js', `module.exports=${JSON.stringify(vueConfig)}`);
 
     const build: BuildParams = {
         componentPath: capsulePath,
@@ -63,12 +65,12 @@ export async function run (actionParams: any, _:any, context: any) : Promise<voi
         componentName: componentObject.name
     }
     try {
-        res = await runBuild(build); 
+        res = await runBuild(build);
     } catch (e) {
         console.log(e);
         process.exit(1);
     }
 
     //copy non compiled sources to dist
-    
+
 }
