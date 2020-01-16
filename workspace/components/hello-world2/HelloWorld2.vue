@@ -84,10 +84,12 @@
         >
       </li>
     </ul>
+    <img :src="require('./assets/kitty.jpg')"/>
   </div>
 </template>
 
 <script>
+import './HelloWorld2.css';
 export default {
   name: "HelloWorld2",
   props: {

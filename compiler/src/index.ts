@@ -1,11 +1,13 @@
 
 const vueCli = require('@vue/cli-service');
-const path = require('path');
+import path from 'path';
 import debug from 'debug';
 import {getCapsuleName} from './capsule.utils';
 import {TSConfig} from './tsconfig';
 import { vueConfig } from './vueConfig';
+import readdir from 'recursive-readdir'
 
+console.log(vueCli)
 const COMPILED_EXTS = ['vue', 'ts', 'tsx'];
 
 interface BuildParams {
@@ -37,14 +39,13 @@ export async function run (actionParams: any, _:any, context: any) : Promise<voi
     const isolateOptions = {};
     const actualOpts = { ...{ targetDir, shouldBuildDependencies: true }, ...isolateOptions };
     let res = await isolate(actualOpts);
-    console.dir(res, {depth: 10, colors: true})
-    const fs = res.fs;
+    const fs = res.capsule.fs;
+
 
     // Get compilation Files
     const capsulePath = res.capsule.container.path;
     let sources : Array<any> = res.componentWithDependencies.component.toObject().files;
     let compiledSources = sources.filter(s => COMPILED_EXTS.includes(s.extname));
-    let nonCompiledSources = sources.filter(s => !COMPILED_EXTS.includes(s.extname));
     compiledSources = sources.map(s => path.join(componentDir, s.path));
     console.log(capsulePath);
     
@@ -71,6 +72,9 @@ export async function run (actionParams: any, _:any, context: any) : Promise<voi
         process.exit(1);
     }
 
-    //copy non compiled sources to dist
+    let nonCompiledSources = sources.filter(s => !COMPILED_EXTS.includes(s.extname));
+    nonCompiledSources.forEach(s => console.log(s.relative, s.path, s.base))
 
+    res = await readdir(path.join(capsulePath, 'dist'));
+    console.log (res);
 }

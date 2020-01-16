@@ -4,9 +4,19 @@
     "tallyb.test2/hello-world2@0.0.1": {
         "files": [
             {
+                "relativePath": "HelloWorld2.css",
+                "test": false,
+                "name": "HelloWorld2.css"
+            },
+            {
                 "name": "HelloWorld2.vue",
                 "relativePath": "HelloWorld2.vue",
                 "test": false
+            },
+            {
+                "relativePath": "assets/kitty.jpg",
+                "test": false,
+                "name": "kitty.jpg"
             }
         ],
         "mainFile": "HelloWorld2.vue",
