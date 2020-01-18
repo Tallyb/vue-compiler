@@ -1,25 +1,27 @@
-
-const vueCli = require('@vue/cli-service');
 import path from 'path';
 import debug from 'debug';
-import {getCapsuleName} from './capsule.utils';
+const vueCli = require('@vue/cli-service');
+
 import {TSConfig} from './tsconfig';
 import { vueConfig } from './vueConfig';
-import readdir from 'recursive-readdir'
 
-console.log(vueCli)
+import {
+    ActionReturnType,
+    BuildParams,
+    createCapsule, 
+    destroyCapsule, 
+    getSourceFiles, 
+    readFiles, 
+} from './utils';
+
+if (process.env.DEBUG) {debug('build');}
 const COMPILED_EXTS = ['vue', 'ts', 'tsx'];
 
-interface BuildParams {
-    componentPath: string;
-    mainFile: string;
-    componentName: string;
-}
 async function runBuild (options: BuildParams): Promise<any> {
     const {componentPath, mainFile, componentName} = options;
     const service = new vueCli(process.cwd());
     return service.run('build', {
-        entry: path.join(componentPath, mainFile), //should be component main file of course
+        entry: path.join(componentPath, mainFile), 
         target: 'lib',
         name: componentName,
         formats: ['commonjs'],
@@ -27,54 +29,45 @@ async function runBuild (options: BuildParams): Promise<any> {
     }); 
 }
 
-export async function run (actionParams: any, _:any, context: any) : Promise<void> {
-
-    if (process.env.DEBUG) {debug('build');}
+export async function run (actionParams: any, _:any, context: any) : Promise<ActionReturnType> {
 
     const {componentObject, rootDistDir, componentDir, isolate} = context;
     
     // build capsule
-    const targetDir = getCapsuleName();
-    debug(`\n building ${componentObject.name} on directory ${targetDir}`);
-    const isolateOptions = {};
-    const actualOpts = { ...{ targetDir, shouldBuildDependencies: true }, ...isolateOptions };
-    let res = await isolate(actualOpts);
-    const fs = res.capsule.fs;
-
+    const { res, directory} = await createCapsule(isolate, { shouldBuildDependencies: true})
 
     // Get compilation Files
-    const capsulePath = res.capsule.container.path;
-    let sources : Array<any> = res.componentWithDependencies.component.toObject().files;
-    let compiledSources = sources.filter(s => COMPILED_EXTS.includes(s.extname));
-    compiledSources = sources.map(s => path.join(componentDir, s.path));
-    console.log(capsulePath);
+    const fs = res.capsule.fs;
+    let files : Array<any> = res.componentWithDependencies.component.toObject().files;
+    let sources = getSourceFiles(files, COMPILED_EXTS);
     
     // write TS config into capsule
     let TS = Object.assign(TSConfig, {
-        include: compiledSources,
+        include: sources.map(s => path.join(componentDir, s.path)),
     });
-    console.log(capsulePath);
-    console.log(path.join(capsulePath, 'vue.config.js'));
     await fs.writeFile('tsconfig.json', JSON.stringify(TS, null, 4));
 
     //write Vue config into capsule
     await fs.writeFile('vue.config.js', `module.exports=${JSON.stringify(vueConfig)}`);
 
-    const build: BuildParams = {
-        componentPath: capsulePath,
+    const buildParams: BuildParams = {
+        componentPath: directory,
         mainFile: componentObject.mainFile,
         componentName: componentObject.name
     }
     try {
-        res = await runBuild(build);
+        await runBuild(buildParams);
     } catch (e) {
         console.log(e);
         process.exit(1);
     }
 
-    let nonCompiledSources = sources.filter(s => !COMPILED_EXTS.includes(s.extname));
-    nonCompiledSources.forEach(s => console.log(s.relative, s.path, s.base))
-
-    res = await readdir(path.join(capsulePath, 'dist'));
-    console.log (res);
+    const dists = await readFiles(path.join(directory, 'dist'));
+    const mainFile = dists?.find(f => f.path.endsWith(`${componentObject.name}.common.js`));
+    console.log(mainFile);
+    destroyCapsule(res.capsule)
+    return {
+        mainFile: mainFile && mainFile.path , 
+        dists: dists || []
+    }
 }

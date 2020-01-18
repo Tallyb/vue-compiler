@@ -14,6 +14,11 @@
                 "test": false
             },
             {
+                "relativePath": "HellowWorld2.spec.ts",
+                "test": true,
+                "name": "HellowWorld2.spec.ts"
+            },
+            {
                 "relativePath": "assets/kitty.jpg",
                 "test": false,
                 "name": "kitty.jpg"

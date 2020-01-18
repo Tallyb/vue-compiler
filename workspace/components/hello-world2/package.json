@@ -2,7 +2,7 @@
   "name": "@bit/tallyb.test2.hello-world2",
   "version": "0.0.1",
   "homepage": "https://bit.dev/tallyb/test2/hello-world2",
-  "main": "dist/HelloWorld2.js",
+  "main": "dist/var/folders/w2/frfs_j4n46s75383m2ld98xc0000gn/T/bit/capsule-16680/dist/hello-world2.common.js",
   "dependencies": {},
   "devDependencies": {},
   "peerDependencies": {},
