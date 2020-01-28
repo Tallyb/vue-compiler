@@ -1,4 +1,4 @@
-import { getSourceFiles, getTestFiles , findMainFile } from './files.utils';
+import { getSourceFiles, getTestFiles} from './files.utils';
 import Vinyl from 'vinyl';
 
 describe ('files utils', () => {

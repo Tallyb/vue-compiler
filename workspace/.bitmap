@@ -9,14 +9,14 @@
                 "name": "HelloWorld2.css"
             },
             {
+                "relativePath": "HelloWorld2.spec.ts",
+                "test": true,
+                "name": "HelloWorld2.spec.ts"
+            },
+            {
                 "name": "HelloWorld2.vue",
                 "relativePath": "HelloWorld2.vue",
                 "test": false
-            },
-            {
-                "relativePath": "HellowWorld2.spec.ts",
-                "test": true,
-                "name": "HellowWorld2.spec.ts"
             },
             {
                 "relativePath": "assets/kitty.jpg",

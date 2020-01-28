@@ -2,7 +2,7 @@
   "name": "@bit/tallyb.test2.hello-world2",
   "version": "0.0.1",
   "homepage": "https://bit.dev/tallyb/test2/hello-world2",
-  "main": "dist/var/folders/w2/frfs_j4n46s75383m2ld98xc0000gn/T/bit/capsule-16680/dist/hello-world2.common.js",
+  "main": "dist/hello-world2.common.js",
   "dependencies": {},
   "devDependencies": {},
   "peerDependencies": {},
@@ -13,6 +13,11 @@
         "bit.envs/compilers/test@0.0.1": {
           "options": {
             "file": "../compiler/dist/index.js"
+          },
+          "rawConfig": {
+            "tsconfig": {
+              "target": "ES2017"
+            }
           }
         }
       }

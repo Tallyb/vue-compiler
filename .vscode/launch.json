@@ -8,10 +8,11 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
+            "outFiles": ["${workspaceFolder}/compiler/dist/*.js"],
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/index.js"
+            "program": "${workspaceFolder}/compiler/src/index.ts"
         }
     ]
 }

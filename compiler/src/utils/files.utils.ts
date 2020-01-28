@@ -1,5 +1,6 @@
 import fs from 'fs-extra';
 import Vinyl from 'vinyl';
+import path from 'path';
 import readdir from 'recursive-readdir';
 
 function mapExtensions (extensions: Array<String>) {
@@ -29,32 +30,16 @@ export function getTestFiles (sources: Array<Vinyl>, extensions: Array<String> =
 }
 
 /**
- * Return the main file with .js extension and the required name
- * @param main the main file to match (with no extension)
- * @param outputs the list of Vinyls for inspection 
- */
-export function findMainFile(main: string, suffix: string, files: Array<Vinyl> = []): Vinyl | undefined {
-    if (!main) return undefined;
-    const mainFile = new Vinyl({
-        path: main
-    })
-    return files.find(f => {
-        console.log (mainFile.stem, f.stem, f.extname);
-        return (mainFile.stem === f.stem) && f.path.endsWith(suffix);
-    });
-}
-
-/**
- * Return files in directory as set of Vinyls
+ * Return files in directory as set of Vinyls relative to the dist directory
  * @param path Path to read files from
  */
 export async function readFiles (dir: string): Promise<Array<Vinyl> | undefined> {
-    const files = await readdir(dir);
-    const contents = await Promise.all(files.map(f => fs.readFile(f)));
-    return files.map((f, i) => {
+    const dirFiles = await readdir(dir);
+    let files = dirFiles.map(async f => {
         return new Vinyl({
-            path: f,
-            contents: contents[i]
+            path: path.relative(dir, f),
+            contents: await fs.readFile(f)
         });
     });
+    return  Promise.all(files);
 }
