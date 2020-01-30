@@ -2,6 +2,7 @@ import path from 'path';
 import debug from 'debug';
 import fs from 'fs-extra';
 const vueCli = require('@vue/cli-service');
+import Vinyl from 'vinyl';
 
 import {TSConfig} from './tsconfig';
 import { vueConfig } from './vueConfig';
@@ -19,33 +20,25 @@ if (process.env.DEBUG) {debug('build');}
 const COMPILED_EXTS = ['vue', 'ts', 'tsx'];
 
 export function getDynamicPackageDependencies(ctx: CompilerContext, name?: string) {
-    console.log('DYNAMIC PKG DEPS CTX', ctx, name);
     return {}
 }
 
 export function getDynamicConfig(ctx: CompilerContext) {
-    console.log('DYNAMIC CONFIG CTX', ctx)
     return ctx.rawConfig;
-  }
+}
 
 
 export async function action (ctx: CompilerContext) : Promise<ActionReturnType> {
 
-    const {context, configFiles, files, rawConfig, dynamicConfig, api} = ctx;
-    const {componentObject, rootDistDir, componentDir, isolate} = context;
+    const {context, files } = ctx;
+    const {componentObject, isolate} = context;
 
-    console.log('CONTEXT', context);
-console.log('API', api)
-console.log('RAW', rawConfig),
-console.log('DYNAMIC', dynamicConfig);
-console.log('CONFIG', configFiles)
-console.log('FILES', files)
     // build capsule
     const { res, directory} = await createCapsule(isolate, { shouldBuildDependencies: true})   
     const distDir = path.join(directory, 'dist');
     
     // write TS config into capsule
-    let sources = getSourceFiles(files, COMPILED_EXTS);
+    let sources: Array<Vinyl> = getSourceFiles(files, COMPILED_EXTS);
     let TS = Object.assign(TSConfig, {
         include: sources.map(s => s.path),
     });

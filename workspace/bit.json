@@ -1,4 +1,7 @@
 {
+    "env": {
+        "compiler": "tallyb.test/vue-compiler@0.0.3"
+    },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "npm"
 }

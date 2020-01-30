@@ -31,9 +31,4 @@ export interface ActionReturnType {
     dists: Vinyl[];
     mainFile?: string;
 }
-  
-export interface BuildParams {
-    componentPath: string;
-    mainFile: string;
-    componentName: string;
-}
+
