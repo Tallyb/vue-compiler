@@ -14,7 +14,7 @@ import {
     destroyCapsule, 
     getSourceFiles, 
     readFiles
-} from './utils';
+} from '@bit/bit.envs.common.utils';
 
 if (process.env.DEBUG) {debug('build');}
 const COMPILED_EXTS = ['vue', 'ts', 'tsx'];
