@@ -9,7 +9,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {
-      "compiler": "tallyb.test/vue-compiler@0.0.3"
+      "compiler": "bit.envs/compilers/vue-compiler@0.0.1"
     }
   }
 }
