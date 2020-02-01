@@ -46,7 +46,16 @@
   },
   "bit": {
     "env": {
-      "compiler": "bit.envs/compilers/typescript@3.1.37"
+      "bit.envs/compilers/typescript@3.1.37": {
+        "rawConfig": {
+            "tsconfig": {
+                "compilerOptions": {
+                    "target": "ES5",
+                    "module": "CommonJS"
+                }
+            }
+        }
+    }
     },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "npm",
