@@ -48,13 +48,13 @@ export async function action (ctx: CompilerContext) : Promise<ActionReturnType> 
     await fs.writeFile(path.join(directory, 'vue.config.js'), `module.exports=${JSON.stringify(vueConfig)}`);
 
     try {
-        const service = new vueCli(process.cwd());
+        const service = new vueCli(directory);
         await service.run('build', {
-            entry: path.join(directory, componentObject.mainFile), 
+            entry: componentObject.mainFile, 
             target: 'lib',
             name: componentObject.name,
             formats: ['commonjs'],
-            dest: distDir
+            dest: 'dist'
         }); 
     
     } catch (e) {
