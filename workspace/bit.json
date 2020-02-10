@@ -1,6 +1,6 @@
 {
     "env": {
-        "compiler": "bit.envs/compilers/vue-compiler@0.0.1"
+        "compiler": "bit.envs/compilers/vue-compiler@0.0.5"
     },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "npm"

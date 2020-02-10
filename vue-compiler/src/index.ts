@@ -50,6 +50,7 @@ export async function action (ctx: CompilerContext) : Promise<ActionReturnType> 
     try {
         const service = new vueCli(directory);
         await service.run('build', {
+            mode: 'development',
             entry: componentObject.mainFile, 
             target: 'lib',
             name: componentObject.name,

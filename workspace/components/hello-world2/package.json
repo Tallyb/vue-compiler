@@ -1,6 +1,6 @@
 {
   "name": "@bit/tallyb.test2.hello-world2",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "homepage": "https://bit.dev/tallyb/test2/hello-world2",
   "main": "dist/hello-world2.common.js",
   "dependencies": {},
@@ -9,7 +9,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "bit": {
     "env": {
-      "compiler": "bit.envs/compilers/vue-compiler@0.0.1"
+      "compiler": "bit.envs/compilers/vue-compiler@0.0.5"
     }
   }
 }

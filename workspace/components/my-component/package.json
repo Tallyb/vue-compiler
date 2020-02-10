@@ -1,0 +1,24 @@
+{
+  "name": "@bit/tallyb.test.my-component",
+  "version": "0.0.1",
+  "homepage": "https://bit.dev/tallyb/test/my-component",
+  "main": "dist/my-component.common.js",
+  "dependencies": {
+    "@stencil/core": "^1.8.4",
+    "@bit/tallyb.test.utils": "0.0.1"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {
+      "compiler": {
+        "bit.envs/compilers/test@0.0.1": {
+          "options": {
+            "file": "../stencil-compiler/dist/index.js"
+          }
+        }
+      }
+    }
+  }
+}
