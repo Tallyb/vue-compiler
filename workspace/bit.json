@@ -1,6 +1,12 @@
 {
     "env": {
-        "compiler": "bit.envs/compilers/vue-compiler@0.0.5"
+        "compiler": {
+            "tallyb.test2/compilers/stencil@0.0.2": {
+                "options": {
+                    "file": "../stencil-compiler/dist/index.js"
+                  }
+            }
+        }
     },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "npm"
